@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Porte {
+  PEQUENO
+  MEDIO
+  GRANDE
+}
+
+enum Idade {
+  FILHOTE
+  ADULTO
+  IDOSO
+}
+
+enum nivelEnergia {
+  BAIXA
+  MEDIA
+  ALTA
+}
+
+enum nivelIdependencia {
+  BAIXO
+  MEDIA
+  ALTA
+}
+
+enum ambiente {
+  ambiente_amplo
+  ambiente_pequeno
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model Pet {
+  id                 String            @id @default(uuid())
+  nome               String
+  sobre              String
+  idade              Idade
+  porte              Porte
+  nivelEnergia       nivelEnergia
+  nivelIndependencia nivelIdependencia
+  ambiente           ambiente
+  foto               String
+  requisito          String
+
+  ongs   Ong    @relation(fields: [ong_id], references: [id])
+  ong_id String
+
+  @@map("pets")
+}
+
+model Ong {
+  id                  String @id @default(uuid())
+  nome_do_responsavel String
+  email               String @unique
+  cep                 String
+  endereco            String
+  whatsapp            String
+  senha_hash          String
+  role                Role   @default(MEMBER)
+
+  pets Pet[]
+
+  @@map("ongs")
+}

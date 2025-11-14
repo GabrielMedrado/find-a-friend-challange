@@ -10,11 +10,16 @@ export async function authOngController(req: FastifyRequest, res: FastifyReply) 
     const authOngService = makeAuthOngService();
     const auth = await authOngService.execute(body.email, body.senha);
 
-    const token = await res.jwtSign({}, {
-      sign: {
-        sub: auth.ong.id,
+    const token = await res.jwtSign(
+      {
+        role: auth.ong.role,
       },
-    });
+      {
+        sign: {
+          sub: auth.ong.id,
+        },
+      },
+    );
 
     return res.status(200).send({ token });
 

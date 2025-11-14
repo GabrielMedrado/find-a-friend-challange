@@ -34,6 +34,7 @@ export default defineConfig([
       'comma-dangle': ['error', 'always-multiline'],
       'no-useless-constructor': 'off',
       'no-unused-vars': 'off',
+      'no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {

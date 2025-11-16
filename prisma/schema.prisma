@@ -39,6 +39,7 @@ enum ambiente {
 enum Role {
   ADMIN
   MEMBER
+  ONG
 }
 
 model Pet {
@@ -67,7 +68,7 @@ model Ong {
   endereco            String
   whatsapp            String
   senha_hash          String
-  role                Role   @default(MEMBER)
+  role                Role   @default(ONG)
 
   pets Pet[]
 

@@ -1,4 +1,4 @@
-import { PetNotExistsError } from '@/http/errors/pet-not-exits-rror';
+import { PetNotExistsError } from '@/http/errors/pet-not-exits-error';
 import { PetRepository } from '@/http/repositories/prisma/prisma-pet-repository';
 
 export class GetPetByIdService {

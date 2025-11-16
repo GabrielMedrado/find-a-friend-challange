@@ -53,6 +53,8 @@ model Pet {
   ambiente           ambiente
   foto               String
   requisito          String
+  cidade             String
+  estado             String
 
   ongs   Ong    @relation(fields: [ong_id], references: [id])
   ong_id String

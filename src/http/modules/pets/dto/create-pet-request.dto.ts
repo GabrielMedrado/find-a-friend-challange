@@ -12,6 +12,8 @@ export interface ICreatePetRequestDto {
     foto:               string;
     requisito:          string;
     ongId:              string;
+    cidade:             string;
+    estado:             string;
 }
 
 export const createPetBodySchema = z.object({
@@ -24,4 +26,6 @@ export const createPetBodySchema = z.object({
   ambiente: z.enum(ambiente),
   foto: z.string(),
   requisito: z.string().trim().nonempty(),
+  cidade: z.string().trim().nonempty(),
+  estado: z.string().trim().nonempty(),
 });

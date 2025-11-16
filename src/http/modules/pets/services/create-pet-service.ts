@@ -7,7 +7,7 @@ export class CreatePetService {
     private petRepository: PetRepository,
   ){}
 
-  async execute({ nome, sobre, idade, porte, nivelEnergia, nivelIndependencia, ambiente, foto, requisito, ongId }: ICreatePetRequestDto): Promise<ICreatePetResponseDto> {
+  async execute({ nome, sobre, idade, porte, nivelEnergia, nivelIndependencia, ambiente, foto, requisito, cidade, estado, ongId }: ICreatePetRequestDto): Promise<ICreatePetResponseDto> {
 
     const pet = await this.petRepository.create({
       nome,
@@ -19,6 +19,8 @@ export class CreatePetService {
       ambiente,
       foto,
       requisito,
+      cidade,
+      estado,
       ongs: {
         connect: {
           id: ongId,

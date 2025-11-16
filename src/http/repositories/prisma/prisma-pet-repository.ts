@@ -1,6 +1,7 @@
 import { Prisma, Pet } from '@prisma/client';
 import { IPetRepository } from '../interfaces/pet-repository-interface';
 import { prisma } from '@/lib/prisma';
+import { ISearchPetRequestDto } from '@/http/modules/pets/dto/search-pets-request.dto';
 
 export class PetRepository implements IPetRepository {
   async create(data: Prisma.PetCreateInput): Promise<Pet> {
@@ -36,4 +37,50 @@ export class PetRepository implements IPetRepository {
       },
     });
   }
+
+  async findByCity(city: string): Promise<Pet[]> {
+    const pets = await prisma.pet.findMany({
+      where: {
+        cidade: city,
+      },
+    });
+    return pets;
+  }
+
+  async searchMany(filters: ISearchPetRequestDto) {
+    const {
+      page,
+      cidade,
+      estado,
+      porte,
+      idade,
+      ambiente: amb,
+      nivelEnergia,
+      nivelIndependencia,
+    } = filters;
+
+    const where: Prisma.PetWhereInput = {
+      ...(cidade && {
+        cidade: { contains: cidade, mode: 'insensitive' as const },
+      }),
+      ...(estado && {
+        estado: { contains: estado, mode: 'insensitive' as const },
+      }),
+      ...(porte && { porte }),
+      ...(idade && { idade }),
+      ...(amb && { ambiente: amb }),
+      ...(nivelEnergia && { nivelEnergia }),
+      ...(nivelIndependencia && { nivelIndependencia }),
+    };
+
+    const pets = await prisma.pet.findMany({
+      where,
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+
+    return pets;
+  }
+
+
 }

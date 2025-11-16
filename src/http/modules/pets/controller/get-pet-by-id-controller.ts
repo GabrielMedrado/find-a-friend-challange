@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { getPetByIdBodySchema } from '../dto/get-pet-by-id-request.dto';
-import { makeGetPetByIdService } from '../services/factories/make-get-pet-by-id-serivece copy';
-import { PetNotExistsError } from '@/http/errors/pet-not-exits-rror';
+import { PetNotExistsError } from '@/http/errors/pet-not-exits-error';
+import { makeGetPetByIdService } from '../services/factories/make-get-pet-by-id-serivece';
+
 
 export async function getPetByIdController(req: FastifyRequest, res: FastifyReply){
   const {id} = getPetByIdBodySchema.parse(req.params);

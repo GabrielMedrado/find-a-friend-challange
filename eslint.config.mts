@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default defineConfig([
   {
@@ -22,9 +23,17 @@ export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
+      parser: tseslint.parser,
       globals: globals.node,
     },
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    plugins: {
+      'unused-imports': unusedImports,
+      '@typescript-eslint': tseslint.plugin,
+    },
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+    ],
     rules: {
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
@@ -33,15 +42,33 @@ export default defineConfig([
       'prefer-const': 'error',
       'comma-dangle': ['error', 'always-multiline'],
       'no-useless-constructor': 'off',
+
       'no-unused-vars': 'off',
-      'no-explicit-any': 'warn',
+
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: true,
+          varsIgnorePattern: '^_',
           argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_', 
         },
       ],
+
+      'unused-imports/no-unused-imports': 'warn',
+
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
 ]);

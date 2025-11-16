@@ -14,7 +14,7 @@ CREATE TYPE "nivelIdependencia" AS ENUM ('BAIXO', 'MEDIA', 'ALTA');
 CREATE TYPE "ambiente" AS ENUM ('ambiente_amplo', 'ambiente_pequeno');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'MEMBER');
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'MEMBER', 'ONG');
 
 -- CreateTable
 CREATE TABLE "pets" (
@@ -42,6 +42,7 @@ CREATE TABLE "ongs" (
     "endereco" TEXT NOT NULL,
     "whatsapp" TEXT NOT NULL,
     "senha_hash" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'MEMBER',
 
     CONSTRAINT "ongs_pkey" PRIMARY KEY ("id")
 );
